@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -7,103 +7,117 @@ const ComparePage = () => {
   const [properties, setProperties] = useState([]);
   const [selectedOne, setSelectedOne] = useState("");
   const [selectedTwo, setSelectedTwo] = useState("");
-  const [showComparison, setShowComparison] = useState(false);
-  const comparisonRef = useRef(null);
+  const [showResults, setShowResults] = useState(false);
+  const resultRef = useRef(null);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/c/3b8b-d588-482f-9d99") // replace with your API endpoint
+    fetch("https://dummyjson.com/c/3b8b-d588-482f-9d99")
       .then((res) => res.json())
-      .then((data) => setProperties(data))
-      .catch((err) => console.error("Failed to fetch:", err));
+      .then((data) => setProperties(data ?? []))
+      .catch((err) => console.error("Failed to fetch properties:", err));
   }, []);
+
+  const getProperty = (id) => properties.find((p) => p.id?.toString() === id);
 
   const handleCompare = () => {
     if (selectedOne && selectedTwo) {
-      setShowComparison(true);
+      setShowResults(true);
       setTimeout(() => {
-        comparisonRef.current?.scrollIntoView({ behavior: "smooth" });
+        resultRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
+    } else {
+      alert("Please select both properties before comparing.");
     }
   };
 
-  const getProperty = (id) => properties.find((p) => p.id === parseInt(id));
-
   return (
-    <div className="bg-[#fef5ee] text-[#2b1907] min-h-screen">
+    <div className="min-h-screen flex flex-col bg-[#fef6f2]">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold text-center mb-6">Compare Properties</h1>
+      <div className="flex-grow flex flex-col items-center justify-center px-4 py-12 text-center">
+        <h1 className="text-4xl font-bold text-[#291b14] mb-4">
+          Compare Properties
+        </h1>
+        <p className="text-gray-600 mb-10">
+          Select two properties to see how they stack up.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="flex flex-wrap gap-6 justify-center mb-6">
           <select
-            className="p-3 border rounded-md bg-white"
             value={selectedOne}
             onChange={(e) => setSelectedOne(e.target.value)}
+            className="px-4 py-2 w-72 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#291b14]"
           >
             <option value="">Select first property</option>
-            {properties.map((property) => (
-              <option key={property.id} value={property.id}>
-                {property.title}
+            {properties.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.title}
               </option>
             ))}
           </select>
 
           <select
-            className="p-3 border rounded-md bg-white"
             value={selectedTwo}
             onChange={(e) => setSelectedTwo(e.target.value)}
+            className="px-4 py-2 w-72 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#291b14]"
           >
             <option value="">Select second property</option>
-            {properties.map((property) => (
-              <option key={property.id} value={property.id}>
-                {property.title}
+            {properties.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.title}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="text-center mb-12">
-          <button
-            className="bg-[#2b1907] text-white px-6 py-3 rounded-md hover:bg-[#3a2610] transition"
-            onClick={handleCompare}
-            disabled={!selectedOne || !selectedTwo}
-          >
-            Compare
-          </button>
-        </div>
-
-        {showComparison && (
-          <div ref={comparisonRef} className="grid md:grid-cols-2 gap-6">
-          {[getProperty(selectedOne), getProperty(selectedTwo)].map((prop, idx) =>
-  prop ? (
-    <div key={idx} className="bg-white rounded-xl shadow p-6">
-      <img
-        src={prop.image_url}
-        alt={prop.title}
-        className="w-full h-48 object-cover rounded-md mb-4"
-      />
-      <h2 className="text-xl font-semibold mb-2">{prop.title}</h2>
-      <p className="mb-1">{prop.location}</p>
-      <ul className="text-sm space-y-1">
-        <li>🛏️ {prop.bedrooms} Bedrooms</li>
-        <li>🛁 {prop.bathrooms} Bathrooms</li>
-        <li>📐 {prop.area_sqft} sq ft</li>
-        <li>🏗️ Built in {prop.year_built}</li>
-        <li>🚗 Parking: {prop.parking_spaces}</li>
-        <li>🏡 Type: {prop.property_type}</li>
-        <li>💰 ${prop.price_usd.toLocaleString()}</li>
-      </ul>
-    </div>
-  ) : (
-    <div key={idx} className="bg-white rounded-xl shadow p-6 text-center text-red-600">
-      Property data not found.
-    </div>
-  )
-)}
-
-          </div>
-        )}
+        <button
+          onClick={handleCompare}
+          className="bg-[#291b14] text-white px-6 py-2 rounded-lg hover:bg-[#3e2a1f] transition"
+        >
+          Compare
+        </button>
       </div>
+
+      {showResults && (
+        <div ref={resultRef} className="bg-[#fff7f2] px-6 py-12 w-full">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[getProperty(selectedOne), getProperty(selectedTwo)].map((prop, idx) =>
+              prop ? (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl shadow-lg p-6 border border-[#e2d4c4]"
+                >
+                  <img
+                    src={prop.image_url}
+                    alt={prop.title}
+                    className="w-full h-48 object-cover rounded-xl mb-4"
+                  />
+                  <h2 className="text-xl font-bold text-[#291b14] mb-1">
+                    {prop.title}
+                  </h2>
+                  <p className="text-sm text-[#725f53] mb-4">{prop.location}</p>
+                  <ul className="text-sm text-[#4b3d35] space-y-1 text-left">
+                    <li>🛏️ {prop.bedrooms} Bedrooms</li>
+                    <li>🛁 {prop.bathrooms} Bathrooms</li>
+                    <li>📐 {prop.area_sqft} sq ft</li>
+                    <li>🏗️ Built in {prop.year_built}</li>
+                    <li>🚗 Parking: {prop.parking_spaces}</li>
+                    <li>🏡 Type: {prop.property_type}</li>
+                    <li>💰 ${prop.price_usd.toLocaleString()}</li>
+                  </ul>
+                </div>
+              ) : (
+                <div
+                  key={idx}
+                  className="bg-[#fceeee] text-[#9b1c1c] border border-[#f5c2c2] rounded-2xl p-6 text-center text-md font-medium"
+                >
+                  Property not found or not selected.
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
