@@ -1,8 +1,11 @@
+"use client";
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const page = () => {
+    
+
     return (
         <div>
             <Navbar />
@@ -28,6 +31,7 @@ const page = () => {
                     </div>
                     </div>
                 </div>
+                
             </div>
             <Footer/>
         </div>
