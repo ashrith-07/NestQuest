@@ -66,6 +66,36 @@ const page = () => {
           </div>
         </div>
       </div>
+      <div className="bg-[#FEF7F2] py-16 px-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#2D1C10] mb-6">
+          Do You Have Any Questions?<br />
+          <span className="block">Get Help From Us</span>
+        </h2>
+
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-10">
+          <p className="text-[#2D1C10] font-medium">
+            Chat live with our support team
+          </p>
+          <p className="text-[#2D1C10] font-medium">
+            Browse our FAQ
+          </p>
+        </div>
+
+        {/* Email Input Section */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <input
+            type="text"
+            placeholder="Enter your email address..."
+            className="bg-[#DDC7BB] text-[#2D1C10] placeholder-[#4B3A2F] px-4 py-3 rounded-md w-[300px] sm:w-[400px] outline-none"
+          />
+          <button className="bg-[#2D1C10] text-white px-6 py-3 rounded-md font-semibold hover:bg-[#1c120a] transition">
+            Submit
+          </button>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <br/>
       <Footer />
     </div>
   )
