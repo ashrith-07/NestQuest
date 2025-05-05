@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Link from 'next/link';
 const Hero = () => {
   return (
     <div
@@ -13,9 +13,11 @@ const Hero = () => {
       <p className="text-xl text-[#2B1B12] mb-6">
         Find and compare the best properties
       </p>
-      <button className="mt-4 px-6 py-3 text-lg bg-[#2B1B12] text-white rounded-md hover:bg-[#3c2b20] transition">
-        Compare
-      </button>
+      <Link href="./compare">
+        <button className="mt-4 px-6 py-3 text-lg bg-[#2B1B12] text-white rounded-md hover:bg-[#3c2b20] transition">
+          Compare
+        </button>
+      </Link>
     </div>
   );
 };
