@@ -80,8 +80,7 @@ const page = () => {
             Browse our FAQ
           </p>
         </div>
-
-        {/* Email Input Section */}
+        
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
           <input
             type="text"
