@@ -1,8 +1,8 @@
-// app/layout.jsx
-import './globals.css'; // This is required to load Tailwind
+
+import './globals.css'; 
 
 export const metadata = {
-    title: 'Your App Name',
+    title: 'NestQuest',
     description: 'Your app description',
   };
   
