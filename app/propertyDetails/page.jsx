@@ -47,7 +47,7 @@ const PropertyDetails = () => {
       <Navbar />
       <main className="flex-grow px-6 md:px-16 py-12">
         <h1 className="text-4xl font-bold text-center text-[#2A1B12] mb-10">
-          Property Listings
+          Properties and Details
         </h1>
 
         {loading ? (
