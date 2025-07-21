@@ -1,15 +1,33 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+"use client";
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const page = () => {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = () => {
+    if (email.includes('@')) {
+      setEmail('');
+      setError('');
+    } else {
+      setError('Please enter a valid email address');
+    }
+  };
+
   return (
     <div className="bg-[white] min-h-screen">
       <Navbar />
+      
+      {/* Testimonials */}
       <div className="py-12 px-6 text-center">
-        <h1 className="text-3xl font-bold text-[#2D1C10]">What People Say<br />About NestQuest</h1>
+        <h1 className="text-3xl font-bold text-[#2D1C10]">
+          What People Say<br />About NestQuest
+        </h1>
 
         <div className="mt-10 flex flex-col md:flex-row gap-6 justify-center items-center">
+          {/* Testimonial 1 */}
           <div className="bg-[#DDC7BB] rounded-xl shadow-md max-w-sm">
             <img src="images/Group 15-1.png" alt="Room" className="rounded-t-xl" />
             <div className="p-4 text-left">
@@ -28,6 +46,8 @@ const page = () => {
               </p>
             </div>
           </div>
+
+          {/* Testimonial 2 */}
           <div className="bg-[#DDC7BB] rounded-xl shadow-md max-w-sm">
             <img src="images/Group 15-2.png" alt="Room" className="rounded-t-xl" />
             <div className="p-4 text-left">
@@ -46,6 +66,8 @@ const page = () => {
               </p>
             </div>
           </div>
+
+          {/* Testimonial 3 */}
           <div className="bg-[#DDC7BB] rounded-xl shadow-md max-w-sm">
             <img src="images/Group 15.png" alt="Room" className="rounded-t-xl" />
             <div className="p-4 text-left">
@@ -66,6 +88,8 @@ const page = () => {
           </div>
         </div>
       </div>
+
+      {/* Email section with validation */}
       <div className="bg-[#FEF7F2] py-16 px-6 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-[#2D1C10] mb-6">
           Do You Have Any Questions?<br />
@@ -73,31 +97,37 @@ const page = () => {
         </h2>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-10">
-          <p className="text-[#2D1C10] font-medium">
-            Chat live with our support team
-          </p>
-          <p className="text-[#2D1C10] font-medium">
-            Browse our FAQ
-          </p>
+          <p className="text-[#2D1C10] font-medium">Chat live with our support team</p>
+          <p className="text-[#2D1C10] font-medium">Browse our FAQ</p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
           <input
             type="text"
             placeholder="Enter your email address..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="bg-[#DDC7BB] text-[#2D1C10] placeholder-[#4B3A2F] px-4 py-3 rounded-md w-[300px] sm:w-[400px] outline-none"
           />
-          <button className="bg-[#2D1C10] text-white px-6 py-3 rounded-md font-semibold hover:bg-[#1c120a] transition">
+          <button
+            onClick={handleSubmit}
+            className="bg-[#2D1C10] text-white px-6 py-3 rounded-md font-semibold hover:bg-[#1c120a] transition"
+          >
             Submit
           </button>
         </div>
+
+        {error && (
+          <p className="mt-4 text-red-600 font-medium">{error}</p>
+        )}
       </div>
-      <br/>
-      <br/>
-      <br/>
+
+      <br />
+      <br />
+      <br />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

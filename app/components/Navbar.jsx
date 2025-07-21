@@ -26,9 +26,9 @@ const Navbar = () => {
                     <li><Link href="/about">About</Link></li>
                     <li><Link href="./compare">Compare</Link></li>
                 </ul>
-                <button className="bg-[#2A1B12] text-white px-5 py-2 rounded-md hover:bg-[#3c2b20] transition">
+                {/* <button className="bg-[#2A1B12] text-white px-5 py-2 rounded-md hover:bg-[#3c2b20] transition">
                     Sign up
-                </button>
+                </button> */}
             </div>
         </nav>
     );
