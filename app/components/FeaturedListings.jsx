@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
+import Link from 'next/link';
 
 const FeaturedListings = () => {
   const [listings, setListings] = useState([]);
@@ -36,7 +37,7 @@ const FeaturedListings = () => {
           ? data.items
           : [];
 
-        const updatedItems = items.slice(0, 6).map((item, idx) => ({
+        const updatedItems = items.slice(3, 6).map((item, idx) => ({
           ...item,
           image_url: houseImages[idx % houseImages.length],
         }));
@@ -54,7 +55,7 @@ const FeaturedListings = () => {
 
   // Function to handle broken images
   const handleImageError = (e, index) => {
-    let nextIndex = (index + 1) % houseImages.length;
+    let nextIndex = (index + 4) % houseImages.length;
     e.target.src = houseImages[nextIndex];
   };
 
@@ -101,18 +102,15 @@ const FeaturedListings = () => {
                       <FaRulerCombined /> {item.area_sqft || 1500} sqft
                     </span>
                   </div>
-                  <button className="mt-2 w-full px-4 py-2 bg-[#2A1B12] text-white rounded-lg hover:bg-[#3c2b20] transition">
-                    View Details
-                  </button>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-10">
-            <button className="px-6 py-2 bg-[#2A1B12] text-white font-medium rounded-lg hover:bg-[#3c2b20] transition">
+            <Link href="./propertyDetails"><button className="px-6 py-2 bg-[#2A1B12] text-white font-medium rounded-lg hover:bg-[#3c2b20] transition">
               View All Properties
-            </button>
+            </button></Link>
           </div>
         </>
       )}
