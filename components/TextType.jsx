@@ -41,7 +41,7 @@ const TextType = ({
   }, [variableSpeed, typingSpeed]);
 
   const getCurrentTextColor = () => {
-    if (textColors.length === 0) return '#ffffff';
+    if (textColors.length === 0) return undefined; // don’t override Tailwind colors
     return textColors[currentTextIndex % textColors.length];
   };
 
@@ -68,7 +68,7 @@ const TextType = ({
         duration: cursorBlinkDuration,
         repeat: -1,
         yoyo: true,
-        ease: 'power2.inOut'
+        ease: 'power2.inOut',
       });
     }
   }, [showCursor, cursorBlinkDuration]);
@@ -137,25 +137,37 @@ const TextType = ({
     isVisible,
     reverseMode,
     variableSpeed,
-    onSentenceComplete
+    onSentenceComplete,
   ]);
 
   const shouldHideCursor =
-    hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+    hideCursorWhileTyping &&
+    (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
 
-  return createElement(Component, {
-    ref: containerRef,
-    className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
-    ...props
-  }, <span className="inline" style={{ color: getCurrentTextColor() }}>
-    {displayedText}
-  </span>, showCursor && (
+  return createElement(
+    Component,
+    {
+      ref: containerRef,
+      className: `inline-block whitespace-pre-wrap tracking-tight`,
+      ...props,
+    },
     <span
-      ref={cursorRef}
-      className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}>
-      {cursorCharacter}
-    </span>
-  ));
+      className={className} // ✅ Tailwind styles applied here
+      style={{ color: getCurrentTextColor() }}
+    >
+      {displayedText}
+    </span>,
+    showCursor && (
+      <span
+        ref={cursorRef}
+        className={`ml-1 inline-block opacity-100 ${
+          shouldHideCursor ? 'hidden' : ''
+        } ${cursorClassName}`}
+      >
+        {cursorCharacter}
+      </span>
+    ),
+  );
 };
 
 export default TextType;
